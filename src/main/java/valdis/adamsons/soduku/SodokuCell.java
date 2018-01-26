@@ -1,15 +1,15 @@
 package valdis.adamsons.soduku;
 
-import static valdis.adamsons.soduku.SudokuBoard.SUDOKU_SIZE;
+import static valdis.adamsons.soduku.SodokuBoard.SUDOKU_SIZE;
 
-public class SudokuCell {
+public class SodokuCell {
     private final boolean[] numbers;
 
-    private SudokuCell(boolean[] numbers){
+    private SodokuCell(boolean[] numbers){
         this.numbers = numbers;
     }
 
-    public SudokuCell(int... nums) {
+    public SodokuCell(int... nums) {
         boolean[] numbers = new boolean[SUDOKU_SIZE];
         for (int num : nums) {
             numbers[num - 1] = true;
@@ -29,23 +29,38 @@ public class SudokuCell {
     }
 
     public boolean isSolved() {
-        return false;
+        return getNumblerOfPossibleValues() == 1;
     }
 
-    public SudokuCell without(int i) {
+    public boolean isUnsolvable() {
+        return getNumblerOfPossibleValues() == 0;
+    }
+
+
+    private int getNumblerOfPossibleValues() {
+        int possibleValues = 0;
+        for (int n = 1; n <= SUDOKU_SIZE; n++) {
+            if (canContain(n)) {
+                possibleValues++;
+            }
+        }
+        return possibleValues;
+    }
+
+    public SodokuCell without(int i) {
         rangeCheck(i);
         if (canContain(i)) {
             boolean[] newNumbers = numbers.clone();
             newNumbers[i - 1] = false;
-            return new SudokuCell(newNumbers);
+            return new SodokuCell(newNumbers);
         } else {
             return this;
         }
     }
 
-    public static SudokuCell UNKNOWN = new SudokuCell();
+    public static SodokuCell UNKNOWN = new SodokuCell();
 
-    public static SudokuCell known(int i) {
-        return new SudokuCell(i);
+    public static SodokuCell known(int i) {
+        return new SodokuCell(i);
     }
 }
