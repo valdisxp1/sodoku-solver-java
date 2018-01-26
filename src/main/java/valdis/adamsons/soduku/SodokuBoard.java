@@ -1,5 +1,7 @@
 package valdis.adamsons.soduku;
 
+import java.util.Arrays;
+
 public class SodokuBoard {
     public static final int SUDOKU_SIZE = 9;
 
@@ -29,6 +31,19 @@ public class SodokuBoard {
     public String toString() {
         //TODO pretty print
         return "";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SodokuBoard)) return false;
+        SodokuBoard that = (SodokuBoard) o;
+        return Arrays.equals(grid, that.grid);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(grid);
     }
 
     public static class Builder {

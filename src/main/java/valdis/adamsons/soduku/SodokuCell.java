@@ -1,11 +1,13 @@
 package valdis.adamsons.soduku;
 
+import java.util.Arrays;
+
 import static valdis.adamsons.soduku.SodokuBoard.SUDOKU_SIZE;
 
 public class SodokuCell {
     private final boolean[] numbers;
 
-    private SodokuCell(boolean[] numbers){
+    private SodokuCell(boolean[] numbers) {
         this.numbers = numbers;
     }
 
@@ -18,7 +20,7 @@ public class SodokuCell {
     }
 
     private void rangeCheck(int number) {
-        if ( number < 1 || number >= SUDOKU_SIZE){
+        if (number < 1 || number >= SUDOKU_SIZE) {
             throw new IndexOutOfBoundsException();
         }
     }
@@ -62,5 +64,37 @@ public class SodokuCell {
 
     public static SodokuCell known(int i) {
         return new SodokuCell(i);
+    }
+
+    @Override
+    public String toString() {
+        if (isUnsolvable()) {
+            return "X";
+        } else {
+            StringBuilder builder = new StringBuilder();
+            for (int n = 1; n <= SUDOKU_SIZE; n++) {
+                if (canContain(n)) {
+                    builder.append("" + n);
+                }
+            }
+            String str = builder.toString();
+            if (str.length() > 1) {
+                return "[" + str + "]";
+            } else {
+                return str;
+            }
+        }
+    }
+
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SodokuCell)) return false;
+        SodokuCell that = (SodokuCell) o;
+        return Arrays.equals(numbers, that.numbers);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(numbers);
     }
 }
