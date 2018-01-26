@@ -1,4 +1,4 @@
-package valdis.adamsons.soduku;
+package valdis.adamsons.sodoku;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,7 +24,7 @@ public class SodokuBoard {
         this.grid = grid;
     }
 
-    private static void coordinateRangeCheck(int number) {
+    static void coordinateRangeCheck(int number) {
         if (number < 0 || number > SODOKU_SIZE) {
             throw new IndexOutOfBoundsException(""+number);
         }
@@ -40,7 +40,9 @@ public class SodokuBoard {
         return new Builder(grid);
     }
 
-    private String generateHline(){
+    private static final String HLINE = generateHLine();
+
+    private static String generateHLine(){
         StringBuilder builder = new StringBuilder();
         for (int x = 0; x < SODOKU_SIZE; x++) {
             if (x % SODOKU_SIZE_SQRT == 0) {
@@ -54,11 +56,10 @@ public class SodokuBoard {
 
     @Override
     public String toString() {
-        String hline = generateHline();
         StringBuilder builder = new StringBuilder();
         for (int y = 0; y < SODOKU_SIZE; y++) {
             if (y % SODOKU_SIZE_SQRT == 0) {
-                builder.append(hline);
+                builder.append(HLINE);
             }
             for (int x = 0; x < SODOKU_SIZE; x++) {
                 if (x % SODOKU_SIZE_SQRT == 0) {
@@ -68,7 +69,7 @@ public class SodokuBoard {
             }
             builder.append("|\n");
         }
-        builder.append(hline);
+        builder.append(HLINE);
         return builder.toString();
     }
 
@@ -100,10 +101,8 @@ public class SodokuBoard {
             }
         }
 
-        public SodokuCell getCellAt(int x, int y) {
-            coordinateRangeCheck(x);
-            coordinateRangeCheck(y);
-            return grid[x * SODOKU_SIZE + y];
+        public SodokuCell getCellAt(Coordinates coordinates) {
+            return grid[coordinates.x * SODOKU_SIZE + coordinates.y];
         }
 
         public Builder setNumber(int x, int y, int number) {
@@ -113,19 +112,10 @@ public class SodokuBoard {
             return this;
         }
 
-        public Builder removeNumber(int x, int y, int number) {
-            coordinateRangeCheck(x);
-            coordinateRangeCheck(y);
-            grid[x * SODOKU_SIZE + y] = getCellAt(x, y).without(number);
-            return this;
-        }
-
-        public Builder removeNumberUnsolved(int x, int y, int number) {
-            coordinateRangeCheck(x);
-            coordinateRangeCheck(y);
-            SodokuCell cell = getCellAt(x, y);
+        public Builder removeNumberFromUnsolved(Coordinates coordinates, int number) {
+            SodokuCell cell = getCellAt(coordinates);
             if (!cell.isSolved()) {
-                grid[x * SODOKU_SIZE + y] = cell.without(number);
+                grid[coordinates.x * SODOKU_SIZE + coordinates.y] = cell.without(number);
             }
             return this;
         }

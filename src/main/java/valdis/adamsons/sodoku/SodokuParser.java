@@ -1,9 +1,9 @@
-package valdis.adamsons.soduku;
+package valdis.adamsons.sodoku;
 
 import java.io.*;
 import java.text.ParseException;
 
-import static valdis.adamsons.soduku.SodokuBoard.SODOKU_SIZE;
+import static valdis.adamsons.sodoku.SodokuBoard.SODOKU_SIZE;
 
 public class SodokuParser {
     private final File file;

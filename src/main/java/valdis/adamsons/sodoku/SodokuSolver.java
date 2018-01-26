@@ -1,4 +1,4 @@
-package valdis.adamsons.soduku;
+package valdis.adamsons.sodoku;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class SodokuSolver {
-    private final SodokuBoard firstBoard;
+    public final SodokuBoard firstBoard;
     private List<Area> areas;
     private SodokuBoard currentBoard;
     private SodokuBoard oldBoard = null;
@@ -30,7 +30,7 @@ public class SodokuSolver {
                 area ->
                 {
                     List<Integer> solvedValues = area.data.stream()
-                            .map(coordinates -> builder.getCellAt(coordinates.x, coordinates.y))
+                            .map(coordinates -> builder.getCellAt(coordinates))
                             .filter(SodokuCell::isSolved)
                             .map(SodokuCell::firstValue)
                             .sorted()
@@ -44,7 +44,7 @@ public class SodokuSolver {
                     solvedValues.forEach(
                             value ->
                                     area.data.forEach(
-                                            coordinates -> builder.removeNumberUnsolved(coordinates.x, coordinates.y, value)
+                                            coordinates -> builder.removeNumberFromUnsolved(coordinates, value)
                                     ));
                 }
         );

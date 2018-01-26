@@ -1,4 +1,4 @@
-package valdis.adamsons.soduku;
+package valdis.adamsons.sodoku;
 
 import java.util.Objects;
 
@@ -6,6 +6,8 @@ public class Coordinates {
     final public int x, y;
 
     public Coordinates(int x, int y) {
+        SodokuBoard.coordinateRangeCheck(x);
+        SodokuBoard.coordinateRangeCheck(y);
         this.x = x;
         this.y = y;
     }

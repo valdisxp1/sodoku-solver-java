@@ -1,8 +1,8 @@
-package valdis.adamsons.soduku;
+package valdis.adamsons.sodoku;
 
 import java.util.Arrays;
 
-import static valdis.adamsons.soduku.SodokuBoard.SODOKU_SIZE;
+import static valdis.adamsons.sodoku.SodokuBoard.SODOKU_SIZE;
 
 public class SodokuCell {
     private final boolean[] numbers;

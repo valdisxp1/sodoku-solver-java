@@ -1,11 +1,11 @@
-package valdis.adamsons.soduku;
+package valdis.adamsons.sodoku;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static valdis.adamsons.soduku.SodokuBoard.SODOKU_SIZE;
-import static valdis.adamsons.soduku.SodokuBoard.SODOKU_SIZE_SQRT;
+import static valdis.adamsons.sodoku.SodokuBoard.SODOKU_SIZE;
+import static valdis.adamsons.sodoku.SodokuBoard.SODOKU_SIZE_SQRT;
 
 public class Area {
     /**
