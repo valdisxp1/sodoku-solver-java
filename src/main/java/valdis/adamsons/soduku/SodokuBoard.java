@@ -1,9 +1,20 @@
 package valdis.adamsons.soduku;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class SodokuBoard {
     public static final int SUDOKU_SIZE = 9;
+    public static List<Area> areas() {
+        ArrayList<Area> list = new ArrayList<Area>(SUDOKU_SIZE * 3);
+        for (int i = 0; i < SUDOKU_SIZE; i++) {
+            list.add(Area.horizontalLine(i));
+            list.add(Area.verticalLine(i));
+            list.add(Area.square(i / SUDOKU_SIZE, i % SUDOKU_SIZE));
+        }
+        return list;
+    }
 
     private final SodokuCell[] grid;
 
@@ -73,10 +84,20 @@ public class SodokuBoard {
             return this;
         }
 
-        public synchronized Builder removeNumber(int x, int y, int number) {
+        public Builder removeNumber(int x, int y, int number) {
             rangeCheck(x);
             rangeCheck(y);
             grid[x * SUDOKU_SIZE + y] = getCellAt(x, y).without(number);
+            return this;
+        }
+
+        public Builder removeNumberUnsolved(int x, int y, int number) {
+            rangeCheck(x);
+            rangeCheck(y);
+            SodokuCell cell = getCellAt(x, y);
+            if (!cell.isSolved()) {
+                grid[x * SUDOKU_SIZE + y] = cell.without(number);
+            }
             return this;
         }
 

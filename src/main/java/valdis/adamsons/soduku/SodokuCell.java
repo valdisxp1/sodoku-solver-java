@@ -39,6 +39,16 @@ public class SodokuCell {
     }
 
 
+    public int firstValue() {
+        for (int n = 1; n <= SUDOKU_SIZE; n++) {
+            if (canContain(n)) {
+                return n;
+            }
+        }
+        return -1;
+    }
+
+
     private int getNumblerOfPossibleValues() {
         int possibleValues = 0;
         for (int n = 1; n <= SUDOKU_SIZE; n++) {
