@@ -11,6 +11,7 @@ public class SodokuSolver {
     private List<Area> areas;
     private SodokuBoard currentBoard;
     private SodokuBoard oldBoard = null;
+    private boolean unsolvable = false;
 
     public SodokuSolver(SodokuBoard firstBoard) {
         this.firstBoard = firstBoard;
@@ -19,8 +20,7 @@ public class SodokuSolver {
     }
 
     public boolean isDone() {
-        // or it is solved
-        return currentBoard.equals(oldBoard);
+        return unsolvable || currentBoard.equals(oldBoard);
     }
 
     public void iterate() {
@@ -33,8 +33,14 @@ public class SodokuSolver {
                             .map(coordinates -> builder.getCellAt(coordinates.x, coordinates.y))
                             .filter(SodokuCell::isSolved)
                             .map(SodokuCell::firstValue)
+                            .sorted()
                             .collect(Collectors.toList());
-                    // TODO check if values are unique
+
+                    if (existDuplicates(solvedValues)) {
+                        unsolvable = true;
+                        return;
+                    }
+
                     solvedValues.forEach(
                             value ->
                                     area.data.forEach(
@@ -45,8 +51,19 @@ public class SodokuSolver {
         currentBoard = builder.result();
     }
 
+    private boolean existDuplicates(List<Integer> sortedValues) {
+        int oldValue = -1;
+        for (Integer value : sortedValues) {
+            if (value == oldValue) {
+                return true;
+            }
+            oldValue = value;
+        }
+        return false;
+    }
+
     public SodokuBoard solve() {
-        while(!isDone()){
+        while (!isDone()) {
             iterate();
         }
         return currentBoard;
@@ -59,7 +76,7 @@ public class SodokuSolver {
         }
         String filename = args[0];
         SodokuBoard board = new SodokuParser(new File(filename)).parse();
-        System.out.println("Parsed from "+filename+":");
+        System.out.println("Parsed from " + filename + ":");
         System.out.println(board);
         SodokuSolver solver = new SodokuSolver(board);
         System.out.println("Solution:");

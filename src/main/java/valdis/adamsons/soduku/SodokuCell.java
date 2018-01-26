@@ -2,7 +2,7 @@ package valdis.adamsons.soduku;
 
 import java.util.Arrays;
 
-import static valdis.adamsons.soduku.SodokuBoard.SUDOKU_SIZE;
+import static valdis.adamsons.soduku.SodokuBoard.SODOKU_SIZE;
 
 public class SodokuCell {
     private final boolean[] numbers;
@@ -12,7 +12,7 @@ public class SodokuCell {
     }
 
     public SodokuCell(int... nums) {
-        boolean[] numbers = new boolean[SUDOKU_SIZE];
+        boolean[] numbers = new boolean[SODOKU_SIZE];
         for (int num : nums) {
             numbers[num - 1] = true;
         }
@@ -20,7 +20,7 @@ public class SodokuCell {
     }
 
     private void valueRangeCheck(int number) {
-        if (number < 1 || number > SUDOKU_SIZE) {
+        if (number < 1 || number > SODOKU_SIZE) {
             throw new IndexOutOfBoundsException("" + number);
         }
     }
@@ -40,7 +40,7 @@ public class SodokuCell {
 
 
     public int firstValue() {
-        for (int n = 1; n <= SUDOKU_SIZE; n++) {
+        for (int n = 1; n <= SODOKU_SIZE; n++) {
             if (canContain(n)) {
                 return n;
             }
@@ -51,7 +51,7 @@ public class SodokuCell {
 
     private int getNumblerOfPossibleValues() {
         int possibleValues = 0;
-        for (int n = 1; n <= SUDOKU_SIZE; n++) {
+        for (int n = 1; n <= SODOKU_SIZE; n++) {
             if (canContain(n)) {
                 possibleValues++;
             }
@@ -70,8 +70,15 @@ public class SodokuCell {
         }
     }
 
-    // TODO generate
-    public static SodokuCell UNKNOWN = new SodokuCell(1, 2, 3, 4, 5, 6, 7, 8, 9);
+    public static final SodokuCell UNKNOWN;
+
+    static {
+        boolean[] numbers = new boolean[SODOKU_SIZE];
+        for (int num = 1; num <= SODOKU_SIZE; num++) {
+            numbers[num - 1] = true;
+        }
+        UNKNOWN = new SodokuCell(numbers);
+    }
 
     public static SodokuCell known(int i) {
         return new SodokuCell(i);
@@ -85,7 +92,7 @@ public class SodokuCell {
             return "X";
         } else {
             StringBuilder builder = new StringBuilder();
-            for (int n = 1; n <= SUDOKU_SIZE; n++) {
+            for (int n = 1; n <= SODOKU_SIZE; n++) {
                 if (canContain(n)) {
                     builder.append(n);
                 }

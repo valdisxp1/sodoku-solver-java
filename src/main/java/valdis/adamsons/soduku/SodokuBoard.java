@@ -1,20 +1,19 @@
 package valdis.adamsons.soduku;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class SodokuBoard {
-    public static final int SUDOKU_SIZE = 9;
-    public static final int SUDOKU_SIZE_SQRT = (int) Math.sqrt(SUDOKU_SIZE);
+    public static final int SODOKU_SIZE = 9;
+    public static final int SODOKU_SIZE_SQRT = (int) Math.sqrt(SODOKU_SIZE);
 
     public static List<Area> areas() {
-        ArrayList<Area> list = new ArrayList<Area>(SUDOKU_SIZE * 3);
-        for (int i = 0; i < SUDOKU_SIZE; i++) {
+        ArrayList<Area> list = new ArrayList<Area>(SODOKU_SIZE * 3);
+        for (int i = 0; i < SODOKU_SIZE; i++) {
             list.add(Area.horizontalLine(i));
             list.add(Area.verticalLine(i));
-            list.add(Area.square(i / SUDOKU_SIZE_SQRT, i % SUDOKU_SIZE_SQRT));
+            list.add(Area.square(i / SODOKU_SIZE_SQRT, i % SODOKU_SIZE_SQRT));
         }
         return list;
     }
@@ -26,7 +25,7 @@ public class SodokuBoard {
     }
 
     private static void coordinateRangeCheck(int number) {
-        if (number < 0 || number > SUDOKU_SIZE) {
+        if (number < 0 || number > SODOKU_SIZE) {
             throw new IndexOutOfBoundsException(""+number);
         }
     }
@@ -34,25 +33,36 @@ public class SodokuBoard {
     public SodokuCell getCellAt(int x, int y) {
         coordinateRangeCheck(x);
         coordinateRangeCheck(y);
-        return grid[x * SUDOKU_SIZE + y];
+        return grid[x * SODOKU_SIZE + y];
     }
 
     public Builder builder() {
         return new Builder(grid);
     }
 
+    private String generateHline(){
+        StringBuilder builder = new StringBuilder();
+        for (int x = 0; x < SODOKU_SIZE; x++) {
+            if (x % SODOKU_SIZE_SQRT == 0) {
+                builder.append('+');
+            }
+            builder.append('-');
+        }
+        builder.append("+\n");
+        return builder.toString();
+    }
+
     @Override
     public String toString() {
-        //TODO generated hline
-        String hline = "+---+---+---+\n";
+        String hline = generateHline();
         StringBuilder builder = new StringBuilder();
-        for (int y = 0; y < SUDOKU_SIZE; y++) {
-            if (y % SUDOKU_SIZE_SQRT == 0) {
+        for (int y = 0; y < SODOKU_SIZE; y++) {
+            if (y % SODOKU_SIZE_SQRT == 0) {
                 builder.append(hline);
             }
-            for (int x = 0; x < SUDOKU_SIZE; x++) {
-                if (x % SUDOKU_SIZE_SQRT == 0) {
-                    builder.append("|");
+            for (int x = 0; x < SODOKU_SIZE; x++) {
+                if (x % SODOKU_SIZE_SQRT == 0) {
+                    builder.append('|');
                 }
                 builder.append(getCellAt(x, y).toString());
             }
@@ -83,7 +93,7 @@ public class SodokuBoard {
         }
 
         public Builder() {
-            int arraySize = SUDOKU_SIZE * SUDOKU_SIZE;
+            int arraySize = SODOKU_SIZE * SODOKU_SIZE;
             grid = new SodokuCell[arraySize];
             for (int i = 0; i < arraySize; i++) {
                 grid[i] = SodokuCell.UNKNOWN;
@@ -93,20 +103,20 @@ public class SodokuBoard {
         public SodokuCell getCellAt(int x, int y) {
             coordinateRangeCheck(x);
             coordinateRangeCheck(y);
-            return grid[x * SUDOKU_SIZE + y];
+            return grid[x * SODOKU_SIZE + y];
         }
 
         public Builder setNumber(int x, int y, int number) {
             coordinateRangeCheck(x);
             coordinateRangeCheck(y);
-            grid[x * SUDOKU_SIZE + y] = SodokuCell.known(number);
+            grid[x * SODOKU_SIZE + y] = SodokuCell.known(number);
             return this;
         }
 
         public Builder removeNumber(int x, int y, int number) {
             coordinateRangeCheck(x);
             coordinateRangeCheck(y);
-            grid[x * SUDOKU_SIZE + y] = getCellAt(x, y).without(number);
+            grid[x * SODOKU_SIZE + y] = getCellAt(x, y).without(number);
             return this;
         }
 
@@ -115,7 +125,7 @@ public class SodokuBoard {
             coordinateRangeCheck(y);
             SodokuCell cell = getCellAt(x, y);
             if (!cell.isSolved()) {
-                grid[x * SUDOKU_SIZE + y] = cell.without(number);
+                grid[x * SODOKU_SIZE + y] = cell.without(number);
             }
             return this;
         }
