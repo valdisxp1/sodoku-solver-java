@@ -70,7 +70,8 @@ public class SodokuCell {
         }
     }
 
-    public static SodokuCell UNKNOWN = new SodokuCell();
+    // TODO generate
+    public static SodokuCell UNKNOWN = new SodokuCell(1, 2, 3, 4, 5, 6, 7, 8, 9);
 
     public static SodokuCell known(int i) {
         return new SodokuCell(i);
