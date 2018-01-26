@@ -1,6 +1,5 @@
 package valdis.adamsons.soduku;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -45,5 +44,10 @@ public class Area {
             }
         }
         return new Area(data);
+    }
+
+    @Override
+    public String toString() {
+        return "Area("+ data + ')';
     }
 }

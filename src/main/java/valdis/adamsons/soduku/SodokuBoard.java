@@ -1,5 +1,6 @@
 package valdis.adamsons.soduku;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +14,7 @@ public class SodokuBoard {
         for (int i = 0; i < SUDOKU_SIZE; i++) {
             list.add(Area.horizontalLine(i));
             list.add(Area.verticalLine(i));
-            list.add(Area.square(i / SUDOKU_SIZE, i % SUDOKU_SIZE));
+            list.add(Area.square(i / SUDOKU_SIZE_SQRT, i % SUDOKU_SIZE_SQRT));
         }
         return list;
     }
