@@ -54,7 +54,7 @@ public class SodokuSolver {
 
     public static void main(String[] args) throws IOException, ParseException {
         //TODO check argcount
-        SodokuBoard board = new SodokuParser(new File(args[1])).parse();
+        SodokuBoard board = new SodokuParser(new File(args[0])).parse();
         System.out.println(board);
         SodokuSolver solver = new SodokuSolver(board);
         System.out.println(solver.solve());

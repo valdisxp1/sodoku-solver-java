@@ -19,14 +19,14 @@ public class SodokuCell {
         this.numbers = numbers;
     }
 
-    private void rangeCheck(int number) {
-        if (number < 1 || number >= SUDOKU_SIZE) {
-            throw new IndexOutOfBoundsException();
+    private void valueRangeCheck(int number) {
+        if (number < 1 || number > SUDOKU_SIZE) {
+            throw new IndexOutOfBoundsException("" + number);
         }
     }
 
     public boolean canContain(int number) {
-        rangeCheck(number);
+        valueRangeCheck(number);
         return numbers[number - 1];
     }
 
@@ -60,7 +60,7 @@ public class SodokuCell {
     }
 
     public SodokuCell without(int i) {
-        rangeCheck(i);
+        valueRangeCheck(i);
         if (canContain(i)) {
             boolean[] newNumbers = numbers.clone();
             newNumbers[i - 1] = false;

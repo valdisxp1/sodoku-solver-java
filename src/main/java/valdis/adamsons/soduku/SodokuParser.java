@@ -21,9 +21,9 @@ public class SodokuParser {
             if (!line.trim().isEmpty() && lineNumber >= SUDOKU_SIZE) {
                 throw new ParseException("Too many lines :'" + line + "'", lineNumber);
             }
-            String[] array = line.split(";");
+            String[] array = (line + " ").split(";");
             if (array.length != SUDOKU_SIZE) {
-                throw new ParseException("the line '" + line + "' is the wrong length, expected " + SUDOKU_SIZE + " elements split by \";\" ", lineNumber);
+                throw new ParseException("the line '" + line + "' is the wrong length, expected " + SUDOKU_SIZE + " elements split by \";\", but was " + array.length, lineNumber);
             }
             for (int x = 0; x < SUDOKU_SIZE; x++) {
                 String item = array[x].trim();
