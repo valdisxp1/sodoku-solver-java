@@ -79,13 +79,15 @@ public class SodokuCell {
 
     @Override
     public String toString() {
-        if (isUnsolvable()) {
+        if (this.equals(UNKNOWN)) {
+            return " ";
+        } else if (isUnsolvable()) {
             return "X";
         } else {
             StringBuilder builder = new StringBuilder();
             for (int n = 1; n <= SUDOKU_SIZE; n++) {
                 if (canContain(n)) {
-                    builder.append("" + n);
+                    builder.append(n);
                 }
             }
             String str = builder.toString();

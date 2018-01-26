@@ -53,10 +53,16 @@ public class SodokuSolver {
     }
 
     public static void main(String[] args) throws IOException, ParseException {
-        //TODO check argcount
-        SodokuBoard board = new SodokuParser(new File(args[0])).parse();
+        if (args.length < 1) {
+            System.err.println("Please specify the filename to be parsed");
+            System.exit(-1);
+        }
+        String filename = args[0];
+        SodokuBoard board = new SodokuParser(new File(filename)).parse();
+        System.out.println("Parsed from "+filename+":");
         System.out.println(board);
         SodokuSolver solver = new SodokuSolver(board);
+        System.out.println("Solution:");
         System.out.println(solver.solve());
     }
 }
