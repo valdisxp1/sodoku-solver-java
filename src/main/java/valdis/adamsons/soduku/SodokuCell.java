@@ -6,9 +6,11 @@ import static valdis.adamsons.soduku.SodokuBoard.SODOKU_SIZE;
 
 public class SodokuCell {
     private final boolean[] numbers;
+    private final int possibleValues;
 
-    private SodokuCell(boolean[] numbers) {
+    private SodokuCell(boolean[] numbers, int possibleValues) {
         this.numbers = numbers;
+        this.possibleValues = possibleValues;
     }
 
     public SodokuCell(int... nums) {
@@ -16,6 +18,7 @@ public class SodokuCell {
         for (int num : nums) {
             numbers[num - 1] = true;
         }
+        this.possibleValues = numbers.length;
         this.numbers = numbers;
     }
 
@@ -31,13 +34,12 @@ public class SodokuCell {
     }
 
     public boolean isSolved() {
-        return getNumblerOfPossibleValues() == 1;
+        return possibleValues == 1;
     }
 
     public boolean isUnsolvable() {
-        return getNumblerOfPossibleValues() == 0;
+        return possibleValues == 0;
     }
-
 
     public int firstValue() {
         for (int n = 1; n <= SODOKU_SIZE; n++) {
@@ -48,23 +50,12 @@ public class SodokuCell {
         return -1;
     }
 
-
-    private int getNumblerOfPossibleValues() {
-        int possibleValues = 0;
-        for (int n = 1; n <= SODOKU_SIZE; n++) {
-            if (canContain(n)) {
-                possibleValues++;
-            }
-        }
-        return possibleValues;
-    }
-
     public SodokuCell without(int i) {
         valueRangeCheck(i);
         if (canContain(i)) {
             boolean[] newNumbers = numbers.clone();
             newNumbers[i - 1] = false;
-            return new SodokuCell(newNumbers);
+            return new SodokuCell(newNumbers, this.possibleValues - 1);
         } else {
             return this;
         }
@@ -77,7 +68,7 @@ public class SodokuCell {
         for (int num = 1; num <= SODOKU_SIZE; num++) {
             numbers[num - 1] = true;
         }
-        UNKNOWN = new SodokuCell(numbers);
+        UNKNOWN = new SodokuCell(numbers, SODOKU_SIZE);
     }
 
     public static SodokuCell known(int i) {
