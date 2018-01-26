@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static valdis.adamsons.soduku.SodokuBoard.SUDOKU_SIZE;
+import static valdis.adamsons.soduku.SodokuBoard.SUDOKU_SIZE_SQRT;
 
 public class Area {
     /**
@@ -34,7 +35,7 @@ public class Area {
     }
 
     public static Area square(int relativeX, int relativeY) {
-        int side = (int) Math.sqrt(SUDOKU_SIZE);
+        int side = SUDOKU_SIZE_SQRT;
         int cornerX = relativeX * side;
         int cornerY = relativeY * side;
         Coordinates[] data = new Coordinates[SUDOKU_SIZE];

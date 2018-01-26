@@ -6,6 +6,8 @@ import java.util.List;
 
 public class SodokuBoard {
     public static final int SUDOKU_SIZE = 9;
+    public static final int SUDOKU_SIZE_SQRT = (int) Math.sqrt(SUDOKU_SIZE);
+
     public static List<Area> areas() {
         ArrayList<Area> list = new ArrayList<Area>(SUDOKU_SIZE * 3);
         for (int i = 0; i < SUDOKU_SIZE; i++) {
@@ -23,7 +25,7 @@ public class SodokuBoard {
     }
 
     private static void rangeCheck(int number) {
-        if ( number < 1 || number >= SUDOKU_SIZE){
+        if (number < 1 || number >= SUDOKU_SIZE) {
             throw new IndexOutOfBoundsException();
         }
     }
@@ -40,8 +42,23 @@ public class SodokuBoard {
 
     @Override
     public String toString() {
-        //TODO pretty print
-        return "";
+        //TODO better hline
+        String hline = "----------------------------";
+        StringBuilder builder = new StringBuilder();
+        for (int y = 0; y < SUDOKU_SIZE; y++) {
+            if (y % SUDOKU_SIZE_SQRT == 0) {
+                builder.append(hline);
+            }
+            for (int x = 0; x < SUDOKU_SIZE; x++) {
+                if (x % SUDOKU_SIZE_SQRT == 0) {
+                    builder.append("|");
+                }
+                builder.append(getCellAt(x, y).toString());
+                builder.append("|");
+            }
+            builder.append(hline);
+        }
+        return builder.toString();
     }
 
     @Override
