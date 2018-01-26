@@ -73,7 +73,7 @@ public class SodokuBoard {
             return this;
         }
 
-        public Builder removeNumber(int x, int y, int number) {
+        public synchronized Builder removeNumber(int x, int y, int number) {
             rangeCheck(x);
             rangeCheck(y);
             grid[x * SUDOKU_SIZE + y] = getCellAt(x, y).without(number);
