@@ -1,5 +1,8 @@
 package valdis.adamsons.soduku;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,7 +52,11 @@ public class SodokuSolver {
         return currentBoard;
     }
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws IOException, ParseException {
+        //TODO check argcount
+        SodokuBoard board = new SodokuParser(new File(args[1])).parse();
+        System.out.println(board);
+        SodokuSolver solver = new SodokuSolver(board);
+        System.out.println(solver.solve());
     }
 }

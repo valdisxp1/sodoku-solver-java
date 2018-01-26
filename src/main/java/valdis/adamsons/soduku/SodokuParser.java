@@ -26,7 +26,10 @@ public class SodokuParser {
                 throw new ParseException("the line '" + line + "' is the wrong length, expected " + SUDOKU_SIZE + " elements split by \";\" ", lineNumber);
             }
             for (int x = 0; x < SUDOKU_SIZE; x++) {
-                builder.setNumber(x, lineNumber, Integer.parseInt(array[x]));
+                String item = array[x].trim();
+                if (!item.isEmpty()) {
+                    builder.setNumber(x, lineNumber, Integer.parseInt(item));
+                }
             }
             lineNumber++;
 
