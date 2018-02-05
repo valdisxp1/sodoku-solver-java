@@ -18,7 +18,7 @@ public class SodokuCell {
         for (int num : nums) {
             numbers[num - 1] = true;
         }
-        this.possibleValues = numbers.length;
+        this.possibleValues = nums.length;
         this.numbers = numbers;
     }
 
