@@ -3,7 +3,8 @@ package valdis.adamsons.sodoku;
 import java.util.Objects;
 
 public class Coordinates {
-    final public int x, y;
+    public final int x;
+    public final int y;
 
     public Coordinates(int x, int y) {
         SodokuBoard.coordinateRangeCheck(x);

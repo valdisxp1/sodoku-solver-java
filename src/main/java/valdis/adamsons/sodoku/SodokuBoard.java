@@ -9,7 +9,7 @@ public class SodokuBoard {
     public static final int SODOKU_SIZE_SQRT = (int) Math.sqrt(SODOKU_SIZE);
 
     public static List<Area> areas() {
-        ArrayList<Area> list = new ArrayList<Area>(SODOKU_SIZE * 3);
+        ArrayList<Area> list = new ArrayList<>(SODOKU_SIZE * 3);
         for (int i = 0; i < SODOKU_SIZE; i++) {
             list.add(Area.horizontalLine(i));
             list.add(Area.verticalLine(i));

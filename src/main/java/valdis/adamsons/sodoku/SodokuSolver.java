@@ -30,7 +30,7 @@ public class SodokuSolver {
                 area ->
                 {
                     List<Integer> solvedValues = area.data.stream()
-                            .map(coordinates -> builder.getCellAt(coordinates))
+                            .map(builder::getCellAt)
                             .filter(SodokuCell::isSolved)
                             .map(SodokuCell::firstValue)
                             .sorted()
